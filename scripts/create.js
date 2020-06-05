@@ -24,16 +24,35 @@ function getCities(event){
 
     const url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${ufValue}/municipios`
 
+    citySelect.innerHTML = ""
+    citySelect.disabled = true
+
     fetch(url)
     .then(res => res.json())
     .then(cities => {
         for(const city of cities){
-            citySelect.innerHTML += `<option value = "${city.id}">${city.nome}</option>`
+            citySelect.innerHTML += `<option value = "${city.nome}">${city.nome}</option>`
         }
-         citySelect.disabled = false
+        citySelect.disabled = false
     })
 }
 
 document
     .querySelector("select[name=uf]")
     .addEventListener("change", getCities)
+
+//items de coleta
+const itemsToCollect = document.querySelectorAll(".items-grid li")
+
+for(const item of itemsToCollect){
+    itemsToCollect.addEventListener("click", handleSelectedItem)
+}
+
+function handleSelectedItem(event){
+    const itemli = event.target.dataset.id
+    
+    //add ou remover uma classe em javascript
+    itemli.classList.toggle("selected")
+
+    const itemId = itemli.dataset.id
+}
